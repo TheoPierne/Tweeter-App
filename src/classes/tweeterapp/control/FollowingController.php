@@ -42,9 +42,8 @@ class FollowingController extends AbstractController {
 		}
 		$idUser = TweeterAuthentification::connectedUser();
 		$user = User::where('id', '=', $idUser)->first();
-		$data = $user->follows()->get();
 
-		$view = new FollowingView($data);
+		$view = new FollowingView($user);
 		echo $view->makePage();
 	}
 }

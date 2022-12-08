@@ -193,14 +193,19 @@ article h3 {
 
 /* following */
 
-#followees {
+.list_follow {
+    display: flex;
+    justify-content: space-around;
+}
+
+#followees, #followers {
     padding : 0px;
 }
 
-#followees li {
+#followees li, #followers li {
     list-style : none;
 }
-#followees li a {
+#followees li a, #followers li a {
  text-decoration : none;
 }
 

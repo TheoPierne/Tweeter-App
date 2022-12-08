@@ -15,4 +15,8 @@ class Tweet extends \Illuminate\Database\Eloquent\Model {
 		return $this->belongsTo(User::class, 'author');
 	}
 
+	public function likedBy(){
+        return $this->belongsToMany(User::class, 'like', 'tweet_id', 'user_id');
+    }
+
 }

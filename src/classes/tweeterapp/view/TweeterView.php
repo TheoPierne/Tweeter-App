@@ -23,6 +23,8 @@ abstract class TweeterView extends AbstractView {
 
 		$isConnected = TweeterAuthentification::connectedUser() ? true : false;
 
+		$followHome = '';
+
 		$loginOrProfil = <<<EOT
 		<a class="tweet-control" href="{$this->router->urlFor('login')}">
 		<img alt="login" src="html/login.png">
@@ -45,12 +47,18 @@ abstract class TweeterView extends AbstractView {
 			<img alt="signup" src="html/logout.png">
 			</a>
 			EOT;
+			$followHome = <<<EOT
+			<a class="tweet-control" href="{$this->router->urlFor('following_tweet')}">
+			<img alt="signup" src="html/followHome.png">
+			</a>
+			EOT;
 		}
 
 		return <<<EOT
 		<a class="tweet-control" href="{$this->router->urlFor('default')}">
 		<img alt="home" src="html/home.png">
 		</a>
+		{$followHome}
 		{$loginOrProfil}
 		{$createOrLogout}
 		EOT;

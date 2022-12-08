@@ -7,23 +7,36 @@ use theop\tweeterapp\mf\view\Renderer;
 class FollowingView extends TweeterView implements Renderer {
 
 	public function render() : string {
-		$follows = $this->data;
+		$user = $this->data;
 
-		$str = '<h2>Currently following</h2>';
+        $follows = $user->follows()->get();
+        $followers = $user->followedBy()->get();
+        $followersCount = $followers->count();
 
-		if (!empty($follows)) {
 
-			$str .= '<ul id="followees">';
+        $html = <<<EOL
+        	<article class='theme-backcolor2'>
+                <h2>Nombre de follower : $followersCount</h2>
+                <div class='list_follow'>
+            	    <div>
+                		<h3>Liste des follows :</h3>
+                    	<ul id='followees'>
+        EOL;
 
-			foreach ($follows as $key => $value) {
-				$str .= "<li><a href='{$this->router->urlFor('user', [['id' => $value['id']]])}'>{$value['fullname']}</a></li>";
-			}
+        foreach ($follows as $follow){
+            $username = $follow->username;
+            $html .= "<li><a href='{$this->router->urlFor('user',[['id',$follow->id]])}'>$username</a></li>";
+        }
 
-			$str .= '</ul>';
+        $html .= "</ul></div><div><h3>Liste des followers :</h3><ul id='followers'>";
 
-		}
+        foreach ($followers as $follower){
+            $username = $follower->username;
+            $html .= "<li><a href='{$this->router->urlFor('user',[['id',$follower->id]])}'>$username</a></li>";
+        }
 
-		return $str;
+		$html .= "</ul></div></div></article>";
+        return $html;
 	}	
 
 }
